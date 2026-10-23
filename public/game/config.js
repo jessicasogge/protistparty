@@ -32,18 +32,15 @@ export const SPECIES = {
   },
 };
 
-// The bacteria in the drop, the protists' food: *E. coli*, drawn like
-// Colette's offspring in PetriPals. `size` is a cell's width over the
-// drop's width; in drop radii, `radius` is how close counts as touching
-// one and `speed` how fast it swims. `count` is how many swim in the drop
-// at a time on level 1; each level after adds PREY_PER_LEVEL more.
+// Prey: E. coli drawn like Colette's offspring. `size` = cell/drop width;
+// `radius` = touch range in drop radii; `speed` = drop radii/sec.
+// `count` = level 1 population; add PREY_PER_LEVEL each level.
 export const PREY = {
   name: '*E. coli*', size: 0.055, radius: 0.025, speed: 0.07, count: 10,
 };
 
-// Each level doubles the colony you need to grow, from 4 cells to 256.
-// `dryMs` is how long the drop takes to dry from full down to GAME.WET_MIN,
-// shorter each level.
+// Colony targets double each level, from 4 to 256 cells.
+// `dryMs`: time to dry to GAME.WET_MIN; shorter each level.
 export const LEVELS = [
   { target: 4, dryMs: 70000 },
   { target: 8, dryMs: 65000 },
