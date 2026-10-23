@@ -29,44 +29,106 @@ const face = (x, y, dark) => `
         <path d="M${x - 6} ${y + 12} Q${x} ${y + 18} ${x + 6} ${y + 12}" stroke="${dark}" stroke-width="3" fill="none" stroke-linecap="round" />
       </g>`;
 
-// Amy's outline in two shapes she oozes between: her pseudopods push out
-// on one side as they pull in on another. Both have the same number of
-// curves, so the browser can morph one into the other.
-const AMY_SHAPES = [
-  'M100 40 C130 36 142 62 162 64 C188 68 186 104 166 116 C150 126 160 158 132 164 C108 170 96 150 74 160 C46 170 28 140 42 118 C52 100 20 88 38 64 C54 44 76 42 100 40 Z',
-  'M104 44 C132 34 152 54 172 56 C194 62 184 98 168 112 C152 124 154 152 128 160 C104 168 92 156 66 166 C36 174 26 134 40 114 C50 98 28 80 46 62 C60 48 80 48 104 44 Z',
+// Amy's outline: a small round body with long, finger-like pseudopods
+// reaching every which way, like a textbook drawing of Amoeba proteus.
+// Each pseudopod is [direction in degrees (0 is right, 90 is down), how
+// far it reaches past her body, how wide it is (radians)]. She oozes
+// between two sets: some pseudopods stretch out as others pull in.
+const AMY_PSEUDOPODS = [
+  [[-30, 38, 0.26], [22, 22, 0.24], [66, 44, 0.24], [130, 30, 0.26], [200, 46, 0.24], [262, 18, 0.3]],
+  [[-36, 44, 0.24], [18, 16, 0.26], [72, 38, 0.26], [124, 38, 0.24], [196, 40, 0.26], [258, 26, 0.28]],
 ];
+const AMY_CENTER = [100, 104];
+const AMY_BODY = 46; // her body's radius
+
+// How far her outline is from her center in direction `angle` (radians).
+// Each pseudopod falls away steeply on either side (a fourth power, not a
+// square), so it comes out as a finger with a rounded tip, not a spike.
+function reach(angle, pseudopods) {
+  let r = AMY_BODY;
+  for (const [direction, length, width] of pseudopods) {
+    const off = ((angle - (direction * Math.PI) / 180 + Math.PI * 3) % (Math.PI * 2)) - Math.PI;
+    r += length * Math.exp(-((off / width) ** 4));
+  }
+  return r;
+}
+
+// Her outline as a smooth, closed SVG path through 60 points around her,
+// `scale` times her full size. Every outline has the same number of
+// curves, so the browser can morph one into the other.
+export function amoebaPath(pseudopods, scale = 1) {
+  const [cx, cy] = AMY_CENTER;
+  const points = Array.from({ length: 60 }, (_, i) => {
+    const angle = (Math.PI * 2 * i) / 60 - Math.PI / 2;
+    const r = reach(angle, pseudopods) * scale;
+    return [cx + r * Math.cos(angle), cy + r * Math.sin(angle)];
+  });
+  const n = (v) => Number(v.toFixed(1));
+  // Each stretch between two points is a curve whose handles point along
+  // the neighbors on either side (a Catmull-Rom spline).
+  const curves = points.map((p1, i) => {
+    const p0 = points[(i + 59) % 60];
+    const p2 = points[(i + 1) % 60];
+    const p3 = points[(i + 2) % 60];
+    const c1 = [p1[0] + (p2[0] - p0[0]) / 6, p1[1] + (p2[1] - p0[1]) / 6];
+    const c2 = [p2[0] - (p3[0] - p1[0]) / 6, p2[1] - (p3[1] - p1[1]) / 6];
+    return `C${n(c1[0])} ${n(c1[1])} ${n(c2[0])} ${n(c2[1])} ${n(p2[0])} ${n(p2[1])}`;
+  });
+  return `M${n(points[0][0])} ${n(points[0][1])} ${curves.join(' ')} Z`;
+}
+
+const AMY_SHAPES = AMY_PSEUDOPODS.map((pods) => amoebaPath(pods));
+// The dotted line just inside her outline: the clear, firm outer layer of
+// her cytoplasm (ectoplasm), around the grainy, flowing inside (endoplasm).
+const AMY_ECTOPLASM = AMY_PSEUDOPODS.map((pods) => amoebaPath(pods, 0.84));
 const OOZE = 'dur="3.2s" repeatCount="indefinite" calcMode="spline" keyTimes="0;0.5;1" keySplines="0.4 0 0.6 1;0.4 0 0.6 1"';
+const ooze = (shapes) => `<animate attributeName="d" ${OOZE} values="${shapes[0]};${shapes[1]};${shapes[0]}" />`;
+
+// Granules and little crystals scattered through her endoplasm, clear of
+// her face, nucleus and vacuoles: [x, y, radius] and [x, y, tilt].
+const AMY_GRANULES = [
+  [125, 88, 1.8], [71, 85, 2.2], [133, 101, 2.6], [85, 86, 1.8], [120, 159, 1.8], [110, 80, 2.6],
+  [90, 137, 2.6], [132, 74, 2.2], [55, 98, 2.2], [139, 88, 2.2], [68, 104, 2.6], [44, 76, 2.6],
+  [126, 148, 1.8], [87, 57, 1.8], [112, 125, 1.8], [78, 146, 2.2],
+];
+const AMY_CRYSTALS = [
+  [99, 62, 20], [82, 72, 50], [97, 125, 0], [133, 120, 50], [55, 84, 0], [34, 86, 50], [95, 74, 70], [143, 111, 20],
+];
 
 export const PROTISTS = [
-  // Amy: Amoeba proteus, a lilac blob with pseudopods, a nucleus, a
-  // contractile vacuole and a sprinkle of granules
+  // Amy: Amoeba proteus, a lilac amoeba with long pseudopods, a nucleus,
+  // a contractile vacuole and a sprinkle of granules and crystals
   {
     id: 'amy',
     name: 'Amy',
-    looks: 'a lilac amoeba: a soft, ever-changing blob with stubby pseudopods, a round nucleus and a clear bubble of a contractile vacuole',
+    looks: 'a lilac amoeba with long, finger-like pseudopods reaching every which way, an oval nucleus and a clear bubble of a contractile vacuole',
     motion: 'squish',
-    frames: { home: '0 0 200 200', drop: '12 14 186 186' },
+    frames: { home: '0 0 200 200', drop: '8.5 24.5 172 172' },
     art: `
       <!-- her outline, oozing between two shapes -->
       <path d="${AMY_SHAPES[0]}" fill="#ece1fd" stroke="#8b5cf6" stroke-width="4" stroke-linejoin="round">
-        <animate attributeName="d" ${OOZE} values="${AMY_SHAPES[0]};${AMY_SHAPES[1]};${AMY_SHAPES[0]}" />
+        ${ooze(AMY_SHAPES)}
       </path>
-      <!-- granules in her cytoplasm -->
+      <!-- the edge of her ectoplasm -->
+      <path d="${AMY_ECTOPLASM[0]}" fill="none" stroke="#c4b0f4" stroke-width="2.2" stroke-dasharray="0.1 6" stroke-linecap="round">
+        ${ooze(AMY_ECTOPLASM)}
+      </path>
+      <!-- granules and crystals in her endoplasm -->
       <g fill="#c4b0f4">
-        <circle cx="58" cy="76" r="2.6" />
-        <circle cx="150" cy="78" r="2.2" />
-        <circle cx="152" cy="104" r="2.6" />
-        <circle cx="88" cy="146" r="2.4" />
-        <circle cx="62" cy="108" r="2" />
-        <circle cx="112" cy="58" r="2.2" />
+        ${AMY_GRANULES.map(([x, y, r]) => `<circle cx="${x}" cy="${y}" r="${r}" />`).join('')}
       </g>
-      <!-- her nucleus -->
-      <ellipse cx="128" cy="134" rx="15" ry="11" fill="#d7c4fa" stroke="#8b5cf6" stroke-width="3" />
+      <g fill="#f8f3ff" stroke="#b9a2f0" stroke-width="1.2">
+        ${AMY_CRYSTALS.map(([x, y, tilt]) => `<rect x="${x - 2.5}" y="${y - 2.5}" width="5" height="5" rx="1" transform="rotate(${tilt} ${x} ${y})" />`).join('')}
+      </g>
+      <!-- her nucleus, grainy with DNA -->
+      <ellipse cx="112" cy="138" rx="15" ry="10" fill="#d7c4fa" stroke="#8b5cf6" stroke-width="3" transform="rotate(-12 112 138)" />
+      <g fill="#a78bfa">
+        <circle cx="105" cy="136" r="1.6" /><circle cx="112" cy="134" r="1.6" /><circle cx="119" cy="137" r="1.6" />
+        <circle cx="108" cy="142" r="1.6" /><circle cx="116" cy="142" r="1.6" />
+      </g>
       <!-- her contractile vacuole, a clear bubble that pumps out extra water -->
-      <circle cx="66" cy="134" r="9" fill="#f8f3ff" stroke="#c4b0f4" stroke-width="2.5" />
-      <ellipse cx="84" cy="58" rx="9" ry="4.5" fill="#f8f3ff" transform="rotate(-20 84 58)" />
-      ${face(102, 98, '#4c1d95')}
+      <circle cx="74" cy="132" r="9" fill="#f8f3ff" stroke="#c4b0f4" stroke-width="2.5" />
+      ${face(100, 98, '#4c1d95')}
     `,
   },
 ];
