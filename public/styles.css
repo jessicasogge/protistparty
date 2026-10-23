@@ -424,13 +424,15 @@ body {
 }
 
 /* A food vacuole (game/colony.js): a bacterium she's swallowed, waiting to
-   be digested, as an amber bubble inside her. It goes once she splits. */
+   be digested, as an amber bubble inside her. It goes once she splits. It
+   sits low in her, between her contractile vacuole and her nucleus, clear
+   of her face. */
 .protist-mover::after {
   content: '';
   position: absolute;
-  left: 34%;
-  top: 30%;
-  width: 16%;
+  left: 39%;
+  top: 65%;
+  width: 12%;
   aspect-ratio: 1;
   border-radius: 50%;
   background: radial-gradient(circle at 35% 35%, #fde68a, #d9a521);
