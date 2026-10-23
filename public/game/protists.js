@@ -29,28 +29,28 @@ const face = (x, y, dark) => `
         <path d="M${x - 6} ${y + 12} Q${x} ${y + 18} ${x + 6} ${y + 12}" stroke="${dark}" stroke-width="3" fill="none" stroke-linecap="round" />
       </g>`;
 
-// Prue's outline in two shapes she oozes between: her pseudopods push out
+// Amy's outline in two shapes she oozes between: her pseudopods push out
 // on one side as they pull in on another. Both have the same number of
 // curves, so the browser can morph one into the other.
-const PRUE_SHAPES = [
+const AMY_SHAPES = [
   'M100 40 C130 36 142 62 162 64 C188 68 186 104 166 116 C150 126 160 158 132 164 C108 170 96 150 74 160 C46 170 28 140 42 118 C52 100 20 88 38 64 C54 44 76 42 100 40 Z',
   'M104 44 C132 34 152 54 172 56 C194 62 184 98 168 112 C152 124 154 152 128 160 C104 168 92 156 66 166 C36 174 26 134 40 114 C50 98 28 80 46 62 C60 48 80 48 104 44 Z',
 ];
 const OOZE = 'dur="3.2s" repeatCount="indefinite" calcMode="spline" keyTimes="0;0.5;1" keySplines="0.4 0 0.6 1;0.4 0 0.6 1"';
 
 export const PROTISTS = [
-  // Prue: Amoeba proteus, a lilac blob with pseudopods, a nucleus, a
+  // Amy: Amoeba proteus, a lilac blob with pseudopods, a nucleus, a
   // contractile vacuole and a sprinkle of granules
   {
-    id: 'prue',
-    name: 'Prue',
+    id: 'amy',
+    name: 'Amy',
     looks: 'a lilac amoeba: a soft, ever-changing blob with stubby pseudopods, a round nucleus and a clear bubble of a contractile vacuole',
     motion: 'squish',
     frames: { home: '0 0 200 200', drop: '12 14 186 186' },
     art: `
       <!-- her outline, oozing between two shapes -->
-      <path d="${PRUE_SHAPES[0]}" fill="#ece1fd" stroke="#8b5cf6" stroke-width="4" stroke-linejoin="round">
-        <animate attributeName="d" ${OOZE} values="${PRUE_SHAPES[0]};${PRUE_SHAPES[1]};${PRUE_SHAPES[0]}" />
+      <path d="${AMY_SHAPES[0]}" fill="#ece1fd" stroke="#8b5cf6" stroke-width="4" stroke-linejoin="round">
+        <animate attributeName="d" ${OOZE} values="${AMY_SHAPES[0]};${AMY_SHAPES[1]};${AMY_SHAPES[0]}" />
       </path>
       <!-- granules in her cytoplasm -->
       <g fill="#c4b0f4">
@@ -72,7 +72,7 @@ export const PROTISTS = [
 ];
 
 // The home page's order.
-const HOME = ['prue'];
+const HOME = ['amy'];
 export const HOME_PROTISTS = HOME.map((id) => PROTISTS.find((protist) => protist.id === id));
 
 export function protistById(id) {

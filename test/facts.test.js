@@ -92,14 +92,14 @@ describe('the pop-up line', () => {
   const line = () => document.querySelector('.fun-fact');
 
   it('shows one of the protist\'s facts', () => {
-    showFact('prue', SPECIES.prue);
+    showFact('amy', SPECIES.amy);
     expect(line().hidden).toBe(false);
-    expect(SPECIES.prue.facts.map(plainText)).toContain(line().querySelector('.fun-fact-text').textContent);
+    expect(SPECIES.amy.facts.map(plainText)).toContain(line().querySelector('.fun-fact-text').textContent);
   });
 
   it('shows the names of other species in italics, without the asterisks', () => {
-    const species = { facts: ['Prue eats *E. coli*.'] };
-    showFact('prue', species);
+    const species = { facts: ['Amy eats *E. coli*.'] };
+    showFact('amy', species);
     const text = line().querySelector('.fun-fact-text');
     expect(text.querySelector('i').textContent).toBe('E. coli');
     expect(text.textContent).not.toContain('*');
@@ -107,9 +107,9 @@ describe('the pop-up line', () => {
 
   it('shows a different fact on the next win', () => {
     for (let i = 0; i < 20; i++) {
-      showFact('prue', SPECIES.prue);
+      showFact('amy', SPECIES.amy);
       const first = line().textContent;
-      showFact('prue', SPECIES.prue);
+      showFact('amy', SPECIES.amy);
       expect(line().textContent).not.toBe(first);
     }
   });
@@ -121,9 +121,9 @@ describe('the pop-up line', () => {
     vi.spyOn(Storage.prototype, 'getItem').mockImplementation(blocked);
     vi.spyOn(Storage.prototype, 'setItem').mockImplementation(blocked);
     try {
-      expect(() => showFact('prue', SPECIES.prue)).not.toThrow();
+      expect(() => showFact('amy', SPECIES.amy)).not.toThrow();
       expect(line().hidden).toBe(false);
-      expect(SPECIES.prue.facts.map(plainText)).toContain(line().querySelector('.fun-fact-text').textContent);
+      expect(SPECIES.amy.facts.map(plainText)).toContain(line().querySelector('.fun-fact-text').textContent);
     } finally {
       vi.restoreAllMocks();
     }
@@ -131,14 +131,14 @@ describe('the pop-up line', () => {
 
   it('does nothing on a page without the fact line', () => {
     document.body.innerHTML = '';
-    expect(() => showFact('prue', SPECIES.prue)).not.toThrow();
+    expect(() => showFact('amy', SPECIES.amy)).not.toThrow();
     expect(() => hideFact()).not.toThrow();
   });
 
   it('stays hidden for a protist with no facts, and hides when asked', () => {
     showFact('nobody', {});
     expect(line().hidden).toBe(true);
-    showFact('prue', SPECIES.prue);
+    showFact('amy', SPECIES.amy);
     hideFact();
     expect(line().hidden).toBe(true);
   });

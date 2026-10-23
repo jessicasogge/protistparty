@@ -7,7 +7,7 @@ import { daughterMover, makeColony, place } from '../public/game/colony.js';
 import { GAME, SPECIES } from '../public/game/config.js';
 
 const RADIUS = 100; // px
-const species = SPECIES.prue;
+const species = SPECIES.amy;
 
 // Stand-in bacteria: `meals` says how many each next eatNear call eats.
 function fakePrey(meals = []) {
@@ -20,7 +20,7 @@ beforeEach(() => {
   document.body.innerHTML = '<div class="drop"><div class="protist-mover player"></div></div>';
   svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
   svg.setAttribute('role', 'img');
-  svg.setAttribute('aria-label', 'Prue');
+  svg.setAttribute('aria-label', 'Amy');
   svg.setAttribute('hidden', '');
   player = { x: 0, y: 0, facing: 1, mover: document.querySelector('.protist-mover') };
 });

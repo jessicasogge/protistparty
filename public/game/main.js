@@ -1,7 +1,7 @@
 // Entry point for the pond drop page: find the protist and level in the
 // address and start the game with them:
-//   pond-drop.html?protist=prue&level=2
-// With no protist (or an unknown one), it's Prue, the first one.
+//   pond-drop.html?protist=amy&level=2
+// With no protist (or an unknown one), it's Amy, the first one.
 import { GAME, LEVELS, PREY, SPECIES } from './config.js';
 import { playGame } from './game.js';
 import { withItalics } from './italics.js';
@@ -21,7 +21,7 @@ document.querySelector('.protist-mover').append(...PROTISTS.map(dropProtist));
 const params = new URLSearchParams(window.location.search);
 const choice = params.get('protist');
 // Compare names rather than building a CSS selector from the address, so a
-// mangled link (e.g. ?protist=prue"]) can't crash the page.
+// mangled link (e.g. ?protist=amy"]) can't crash the page.
 const drawings = [...document.querySelectorAll('.drop-protist')];
 const protist = drawings.find((el) => el.dataset.protist === choice) ?? drawings[0];
 // Level 1 unless the address says otherwise.

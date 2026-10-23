@@ -8,22 +8,23 @@
 //   the bacteria she eats she'd be hundreds of times bigger.
 // `facts`: random win/lose facts (game/facts.js); *names* italicize.
 export const SPECIES = {
-  prue: {
+  amy: {
     facts: [
-      "Prue is named for Proteus, a Greek sea god who could change his shape.",
-      "Prue moves by pushing out pseudopods, which means \"false feet.\"",
-      "Prue eats by wrapping her pseudopods around food. That's phagocytosis.",
-      "Each meal Prue swallows sits in a bubble called a food vacuole while it's digested.",
-      "Prue's contractile vacuole fills with extra water and squeezes it out of her cell.",
-      "Prue can grow to about half a millimeter, just big enough to see without a microscope.",
-      "Prue lives in fresh water, on the bottom of ponds and slow streams.",
-      "Prue eats bacteria, algae and even other protists, like *Paramecium*.",
-      "Prue reproduces by copying her nucleus and splitting in two.",
-      "Prue has no fixed shape: her outline changes all the time.",
-      "Inside Prue, jelly-like cytoplasm streams forward to fill each new pseudopod.",
-      "White blood cells crawl and swallow germs much the way Prue does.",
-      "Unlike many amoebas, Prue isn't known to make cysts to survive drying out.",
-      "In 1755, Rösel von Rosenhof drew an amoeba like Prue and named it the little Proteus.",
+      "Amy's name is short for amoeba, from the Greek word for \"change.\"",
+      "Amy's species is named for Proteus, a Greek sea god who could change his shape.",
+      "Amy moves by pushing out pseudopods, which means \"false feet.\"",
+      "Amy eats by wrapping her pseudopods around food. That's phagocytosis.",
+      "Each meal Amy swallows sits in a bubble called a food vacuole while it's digested.",
+      "Amy's contractile vacuole fills with extra water and squeezes it out of her cell.",
+      "Amy can grow to about half a millimeter, just big enough to see without a microscope.",
+      "Amy lives in fresh water, on the bottom of ponds and slow streams.",
+      "Amy eats bacteria, algae and even other protists, like *Paramecium*.",
+      "Amy reproduces by copying her nucleus and splitting in two.",
+      "Amy has no fixed shape: her outline changes all the time.",
+      "Inside Amy, jelly-like cytoplasm streams forward to fill each new pseudopod.",
+      "White blood cells crawl and swallow germs much the way Amy does.",
+      "Unlike many amoebas, Amy isn't known to make cysts to survive drying out.",
+      "In 1755, Rösel von Rosenhof drew an amoeba like Amy and named it the little Proteus.",
     ],
     scientific: '*Amoeba proteus*',
     color: '#6d28d9',

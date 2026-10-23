@@ -12,10 +12,10 @@ afterEach(() => {
 describe('track', () => {
   it('counts the event on GoatCounter as an event, not a page visit', () => {
     window.goatcounter = { count: vi.fn() };
-    track('level-complete/prue/level-3', 'Prue finished level 3');
+    track('level-complete/amy/level-3', 'Amy finished level 3');
     expect(window.goatcounter.count).toHaveBeenCalledWith({
-      path: 'level-complete/prue/level-3',
-      title: 'Prue finished level 3',
+      path: 'level-complete/amy/level-3',
+      title: 'Amy finished level 3',
       event: true,
     });
   });
@@ -30,7 +30,7 @@ describe('track', () => {
   });
 
   it("quietly does nothing when GoatCounter didn't load (an ad blocker, or offline)", () => {
-    expect(() => track('level-complete/prue/level-1')).not.toThrow();
+    expect(() => track('level-complete/amy/level-1')).not.toThrow();
   });
 
   it('quietly does nothing while GoatCounter is still loading', () => {

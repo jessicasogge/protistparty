@@ -1,6 +1,6 @@
 // @vitest-environment jsdom
 // main.js starts the pond drop page from its address, e.g.
-// pond-drop.html?protist=prue&level=2. These tests load the real page into
+// pond-drop.html?protist=amy&level=2. These tests load the real page into
 // jsdom, a simulated browser page, and check it picks the right protist and
 // level, and copes with addresses that are broken or made up.
 import { readFileSync } from 'node:fs';
@@ -37,23 +37,23 @@ afterEach(() => {
 
 describe('picking the protist', () => {
   it('shows the chosen protist', async () => {
-    await open('?protist=prue');
+    await open('?protist=amy');
     const shown = [...document.querySelectorAll('.drop-protist:not([hidden])')];
-    expect(shown.map((el) => el.dataset.protist)).toEqual(['prue']);
+    expect(shown.map((el) => el.dataset.protist)).toEqual(['amy']);
   });
 
-  it.each(['', '?protist=nobody', '?protist=prue"]'])('picks Prue for %j', async (search) => {
+  it.each(['', '?protist=nobody', '?protist=amy"]'])('picks Amy for %j', async (search) => {
     const { playGame } = await open(search);
-    expect(playGame.mock.calls[0][0].dataset.protist).toBe('prue');
+    expect(playGame.mock.calls[0][0].dataset.protist).toBe('amy');
   });
 
   it('puts her name, in her color, and her species above the drop', async () => {
     await open('');
     const name = document.querySelector('.protist-name');
-    expect(name.textContent).toBe('Prue');
+    expect(name.textContent).toBe('Amy');
     // jsdom reports colors as rgb(), so compare against the same color set the same way.
     const expected = document.createElement('span');
-    expected.style.color = SPECIES.prue.color;
+    expected.style.color = SPECIES.amy.color;
     expect(name.style.color).toBe(expected.style.color);
     expect(document.querySelector('.species-name').innerHTML).toBe('<i>Amoeba proteus</i>');
     expect(document.querySelector('.prey-name').innerHTML).toBe('<i>E. coli</i>');
@@ -61,7 +61,7 @@ describe('picking the protist', () => {
 
   it('names the protist and level in the tab title, and takes the loading card away', async () => {
     await open('?level=3');
-    expect(document.title).toBe('ProtistParty | Prue | Level 3');
+    expect(document.title).toBe('ProtistParty | Amy | Level 3');
     expect(document.querySelector('.loading-overlay').hidden).toBe(true);
   });
 });
@@ -76,7 +76,7 @@ describe('picking the level', () => {
   ])('%j plays level %i', async (search, number) => {
     const { playGame } = await open(search);
     const level = LEVELS[number - 1];
-    expect(playGame).toHaveBeenCalledWith(expect.anything(), SPECIES.prue, expect.any(Function),
+    expect(playGame).toHaveBeenCalledWith(expect.anything(), SPECIES.amy, expect.any(Function),
       { level: number, target: level.target, dryMs: level.dryMs });
   });
 

@@ -98,11 +98,11 @@ describe('a page that starts covered', () => {
 
 describe('goTo', () => {
   it('shows the card, then goes to the address', () => {
-    const location = { href: 'http://localhost/pond-drop.html?protist=prue' };
+    const location = { href: 'http://localhost/pond-drop.html?protist=amy' };
     vi.stubGlobal('location', location);
-    loading.goTo('./pond-drop.html?protist=prue&level=2');
+    loading.goTo('./pond-drop.html?protist=amy&level=2');
     expect(card().hidden).toBe(false);
-    expect(location.href).toBe('./pond-drop.html?protist=prue&level=2');
+    expect(location.href).toBe('./pond-drop.html?protist=amy&level=2');
   });
 });
 

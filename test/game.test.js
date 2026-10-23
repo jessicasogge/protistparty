@@ -46,16 +46,16 @@ function makeFakeColony() {
   };
 }
 
-// Start a level as Prue and return the pop-up.
+// Start a level as Amy and return the pop-up.
 function start({ level = 1, target = LEVELS[level - 1].target, dryMs = LEVELS[level - 1].dryMs } = {}) {
   const protistEl = document.createElement('div');
-  protistEl.dataset.protist = 'prue';
-  protistEl.dataset.name = 'Prue';
+  protistEl.dataset.protist = 'amy';
+  protistEl.dataset.name = 'Amy';
   const makeFood = (wet) => {
     wetGiven = wet;
     return prey;
   };
-  playGame(protistEl, SPECIES.prue, makeFood, { level, target, dryMs });
+  playGame(protistEl, SPECIES.amy, makeFood, { level, target, dryMs });
   return document.querySelector('.win-banner');
 }
 
@@ -103,7 +103,7 @@ describe('starting a level', () => {
     start();
     const mover = document.querySelector('.protist-mover');
     expect(mover.classList.contains('player')).toBe(true);
-    expect(mover.style.width).toBe(`${SPECIES.prue.size * 100}%`);
+    expect(mover.style.width).toBe(`${SPECIES.amy.size * 100}%`);
     const { wet, target, prey: given } = makeColony.mock.calls[0][0];
     expect(wet()).toBe(1);
     expect(wetGiven()).toBe(1);
@@ -151,10 +151,10 @@ describe('growing the colony', () => {
     vi.advanceTimersByTime(400);
     expect(banner.hidden).toBe(false);
     expect(banner.querySelector('h2').textContent).toBe('Level 1 complete!');
-    expect(banner.querySelector('.win-message').textContent).toBe('Prue grew to 4 cells!');
+    expect(banner.querySelector('.win-message').textContent).toBe('Amy grew to 4 cells!');
     expect(banner.querySelector('.play-again').textContent).toBe('Play level 2');
     expect(banner.querySelector('.fun-fact').hidden).toBe(false);
-    expect(track).toHaveBeenCalledWith('level-complete/prue/level-1', 'Prue finished level 1');
+    expect(track).toHaveBeenCalledWith('level-complete/amy/level-1', 'Amy finished level 1');
     banner.querySelector('.play-again').click();
     expect(location.href).toBe('http://localhost/pond-drop.html?level=2');
   });
@@ -167,8 +167,8 @@ describe('growing the colony', () => {
     vi.advanceTimersByTime(400);
     expect(banner.querySelector('h2').textContent).toBe('You won!');
     expect(banner.querySelector('.win-message').textContent)
-      .toBe('You beat all 7 levels: Prue grew to 256 cells!');
-    expect(track).toHaveBeenCalledWith('won-all-levels/prue', 'Prue beat every level');
+      .toBe('You beat all 7 levels: Amy grew to 256 cells!');
+    expect(track).toHaveBeenCalledWith('won-all-levels/amy', 'Amy beat every level');
     banner.querySelector('.play-again').click();
     expect(location.href).toBe('http://localhost/pond-drop.html?level=1');
   });
@@ -189,9 +189,9 @@ describe('drying out', () => {
     expect(banner.hidden).toBe(false);
     expect(banner.querySelector('h2').textContent).toBe('Dried out!');
     expect(banner.querySelector('.win-message').textContent)
-      .toBe('The drop dried up around Prue. Keep away from the drying edge!');
+      .toBe('The drop dried up around Amy. Keep away from the drying edge!');
     expect(banner.querySelector('.play-again').textContent).toBe('Try again');
-    expect(track).toHaveBeenCalledWith('dried-out/prue/level-2', 'Prue dried out on level 2');
+    expect(track).toHaveBeenCalledWith('dried-out/amy/level-2', 'Amy dried out on level 2');
     banner.querySelector('.play-again').click();
     expect(location.href).toBe('http://localhost/pond-drop.html?level=2');
   });

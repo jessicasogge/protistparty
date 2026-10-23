@@ -8,7 +8,7 @@ import confetti from './vendor/confetti.js';
 export const PARTY_COLORS = [
   '#4FB3BF', // pond water teal
   '#7CC46A', // pond-scum green
-  '#B98AE0', // Prue's lilac
+  '#B98AE0', // Amy's lilac
   '#3E7CC9', // methylene blue
   '#E8C26A', // Lugol's iodine amber
   '#E85A8C', // eosin pink

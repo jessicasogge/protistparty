@@ -34,27 +34,27 @@ describe('the protists', () => {
 });
 
 describe('her drawings', () => {
-  const prue = protistById('prue');
+  const amy = protistById('amy');
 
   it('on the home page are named for screen readers', () => {
-    const svg = homeProtist(prue);
-    expect(svg.getAttribute('class')).toBe(`protist ${prue.motion}`);
-    expect(svg.getAttribute('viewBox')).toBe(prue.frames.home);
-    expect(svg.getAttribute('aria-label')).toBe(`Prue, ${prue.looks}`);
+    const svg = homeProtist(amy);
+    expect(svg.getAttribute('class')).toBe(`protist ${amy.motion}`);
+    expect(svg.getAttribute('viewBox')).toBe(amy.frames.home);
+    expect(svg.getAttribute('aria-label')).toBe(`Amy, ${amy.looks}`);
   });
 
   it('in the drop start hidden, and say who they are', () => {
-    const svg = dropProtist(prue);
+    const svg = dropProtist(amy);
     expect(svg.hasAttribute('hidden')).toBe(true);
-    expect(svg.dataset.protist).toBe('prue');
-    expect(svg.dataset.name).toBe('Prue');
-    expect(svg.getAttribute('viewBox')).toBe(prue.frames.drop);
+    expect(svg.dataset.protist).toBe('amy');
+    expect(svg.dataset.name).toBe('Amy');
+    expect(svg.getAttribute('viewBox')).toBe(amy.frames.drop);
   });
 
   it('ooze, unless someone asks for less motion', () => {
-    expect(homeProtist(prue).querySelector('animate')).not.toBeNull();
+    expect(homeProtist(amy).querySelector('animate')).not.toBeNull();
     vi.stubGlobal('matchMedia', () => ({ matches: true }));
-    expect(homeProtist(prue).querySelector('animate')).toBeNull();
+    expect(homeProtist(amy).querySelector('animate')).toBeNull();
   });
 });
 
