@@ -1,0 +1,675 @@
+/* The home page's title, tagline and Start button fonts: Fredoka and Nunito,
+   both under the SIL Open Font License (public/fonts/*-OFL.txt). They're kept
+   here rather than loaded from Google Fonts, so the page doesn't wait on, or
+   tell, another site. Until they load, the page uses its usual font. */
+@font-face {
+  font-family: Fredoka;
+  font-weight: 600;
+  font-display: swap;
+  src: url(./fonts/fredoka-600.woff2) format('woff2');
+}
+
+@font-face {
+  font-family: Fredoka;
+  font-weight: 700;
+  font-display: swap;
+  src: url(./fonts/fredoka-700.woff2) format('woff2');
+}
+
+@font-face {
+  font-family: Nunito;
+  font-weight: 700;
+  font-display: swap;
+  src: url(./fonts/nunito-700.woff2) format('woff2');
+}
+
+* {
+  box-sizing: border-box;
+}
+
+/* The page: a pale pond blue, so ProtistParty doesn't look like PetriPals'
+   mint, FunGals' purple or CellMates' pink. */
+body {
+  margin: 0;
+  background: #dcecfa;
+  color: #1e3a5f;
+  font-family: system-ui, sans-serif;
+  text-align: center;
+  padding-top: 3rem;
+}
+
+.friends {
+  display: flex;
+  flex-wrap: wrap; /* on narrow screens, protists wrap onto a second row */
+  justify-content: center;
+  align-items: flex-end;
+  gap: 0.5rem;
+  padding: 0 1rem;
+}
+
+.protist {
+  width: 180px;
+}
+
+/* Wider than a phone, keep every protist on one row: they shrink a little to
+   fit instead of leaving one alone on a second row. */
+@media (min-width: 521px) {
+  .friends {
+    flex-wrap: nowrap;
+    max-width: 100%;
+    box-sizing: border-box;
+  }
+}
+
+.bob {
+  animation: bob 2.4s ease-in-out infinite;
+}
+
+.squish {
+  animation: squish 2s ease-in-out infinite 0.5s;
+  transform-origin: bottom center;
+}
+
+@keyframes wobble {
+  0%,
+  100% {
+    transform: rotate(-4deg);
+  }
+
+  50% {
+    transform: rotate(4deg);
+  }
+}
+
+@keyframes bob {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+@keyframes squish {
+  0%,
+  100% {
+    transform: scale(1, 1);
+  }
+
+  50% {
+    transform: scale(1.08, 0.92);
+  }
+}
+
+/* The game's name on the home page, big and round like a game logo. */
+.logo {
+  margin: 1.6rem 0 0.4rem;
+  font-family: Fredoka, system-ui, sans-serif;
+  font-size: clamp(3.2rem, 15vw, 5.2rem);
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: 0.01em;
+}
+
+/* What the game is, in a few words, under its name. */
+.tagline {
+  margin: 0 0 1.4rem;
+  padding: 0 1rem;
+  font-family: Nunito, system-ui, sans-serif;
+  font-size: clamp(1.05rem, 4.6vw, 1.3rem);
+  font-weight: 700;
+  letter-spacing: 0.01em;
+  color: #2563a8;
+}
+
+/* A sentence or two under the Start button saying what the game is, for
+   new players (and search engines). */
+.about {
+  max-width: 34rem;
+  margin: 2rem auto 0;
+  padding: 0 1.25rem;
+  line-height: 1.5;
+  opacity: 0.85;
+}
+
+/* The links to the sister games, in the game's own blue. */
+.about a {
+  color: #2563a8;
+  font-weight: 700;
+}
+
+.start-btn {
+  margin-top: 1rem;
+  padding: 0.8rem 2rem;
+  font-family: Fredoka, system-ui, sans-serif;
+  font-size: 1.3rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  color: white;
+  background: #2563a8;
+  border: none;
+  border-radius: 999px;
+  box-shadow: 0 4px 0 #1e3a5f;
+  cursor: pointer;
+  transition: background 0.2s ease, transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.start-btn:hover {
+  background: #3b82c4;
+}
+
+.start-btn:active {
+  transform: translateY(3px);
+  box-shadow: 0 1px 0 #1e3a5f;
+}
+
+.start-btn:disabled {
+  cursor: wait;
+  opacity: 0.8;
+}
+
+/* The game page: its card in the middle of the screen. */
+.game-page {
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
+  /* Keep the card and the signature under it together in the middle, even
+     on a page whose card is short. */
+  align-content: center;
+  padding: 2rem 1rem;
+}
+
+.game-shell {
+  width: min(760px, 100%);
+  background: rgba(255, 255, 255, 0.35);
+  border: 2px solid rgba(30, 58, 95, 0.15);
+  border-radius: 24px;
+  padding: 2rem;
+  box-shadow: 0 20px 40px rgba(30, 58, 95, 0.08);
+}
+
+.pick-btn {
+  margin-top: 0.75rem;
+  padding: 0.7rem 1rem;
+  border: none;
+  border-radius: 999px;
+  background: #2563a8;
+  color: white;
+  font-weight: 700;
+  cursor: pointer;
+  display: inline-block;
+  text-decoration: none;
+}
+
+.pick-btn:hover {
+  background: #3b82c4;
+}
+
+.back-link {
+  display: inline-block;
+  margin-top: 1.5rem;
+  color: #2563a8;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.back-link:hover {
+  text-decoration: underline;
+}
+
+.drop-shell {
+  width: min(760px, 100%);
+  /* Nothing on the game page needs selecting, and on an iPhone a finger
+     that slips off the drop onto the words around it would otherwise bring
+     up the text magnifier mid-game. */
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-touch-callout: none;
+}
+
+/* A glass microscope slide, seen from above, with a drop of pond water on
+   it. The drop keeps itself square (below) and the slide wraps around it.
+   Don't size the drop from the slide's height instead: Safari (so every
+   browser on an iPhone) can ignore a percentage height when the parent's
+   height only comes from aspect-ratio, which squashes it into an oval. */
+.slide {
+  position: relative;
+  width: min(600px, 100%);
+  margin: 0 auto;
+  padding: 18px;
+  border-radius: 14px;
+  /* A finger drags the protist from anywhere on the slide, the glass around
+     the drop too (game/touch.js): don't scroll or zoom the page, select
+     text, or pop up the magnifier or long-press menu instead. */
+  touch-action: none;
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-touch-callout: none;
+  /* clear glass, a little blue at the edges */
+  background: rgba(255, 255, 255, 0.55);
+  border: 3px solid rgba(37, 99, 168, 0.3);
+  box-shadow:
+    0 18px 36px rgba(30, 58, 95, 0.15),
+    inset 0 0 0 2px rgba(255, 255, 255, 0.8);
+}
+
+/* The whole drop as it started. Where the water has dried it's bare glass,
+   with a faint ring of dried-up pond scum, like a coffee ring. */
+.drop {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  background: radial-gradient(circle at 50% 50%, #f4f8fb 60%, #e7eef2 92%, #d9e2d4 99%);
+  border: 2px dashed rgba(100, 116, 139, 0.25);
+  /* Touch and hold on the drop to steer (game/touch.js): don't scroll or
+     zoom the page, select text, or pop up the long-press menu instead. */
+  touch-action: none;
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-touch-callout: none;
+}
+
+/* The water still left, --wet of the drop's width (game/drop.js), with a
+   soft highlight and a shiny edge where it meets the glass. */
+.water {
+  grid-area: 1 / 1;
+  width: calc(var(--wet, 1) * 100%);
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background:
+    radial-gradient(circle at 32% 28%, rgba(255, 255, 255, 0.6), transparent 32%),
+    radial-gradient(circle at 50% 50%, #cdeef0, #a9dde3);
+  box-shadow:
+    inset 0 0 0 3px rgba(255, 255, 255, 0.7),
+    0 0 0 2px rgba(56, 140, 160, 0.35);
+  pointer-events: none;
+}
+
+/* Positioned by game/colony.js; the protist's own idle animation stays on
+   the SVG. */
+.protist-mover {
+  grid-area: 1 / 1; /* stack in the drop center */
+  width: 10%; /* each protist's own size is set by game/game.js and game/colony.js */
+  position: relative;
+  z-index: 1; /* over the bacteria */
+  will-change: transform;
+}
+
+.drop-protist {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.drop-protist[hidden] {
+  display: none;
+}
+
+.wobble {
+  animation: wobble 3s ease-in-out infinite;
+}
+
+.species {
+  font-size: 0.95rem;
+}
+
+/* The protist's name and species above the drop. */
+.drop-title {
+  margin-bottom: 1.25rem;
+}
+
+.drop-title .protist-name {
+  margin: 0;
+  font-size: 2rem;
+}
+
+.drop-title .species {
+  margin: 0.15rem 0 0;
+  font-size: 1.05rem;
+}
+
+.win-banner {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  z-index: 3;
+  width: min(320px, 85%);
+  padding: 1.25rem 1.5rem 1.5rem;
+  transform: translate(-50%, -50%);
+  background: rgba(255, 255, 255, 0.92);
+  border: 2px solid rgba(37, 99, 168, 0.25);
+  border-radius: 20px;
+  box-shadow: 0 16px 36px rgba(30, 58, 95, 0.2);
+  animation: pop-in 0.35s ease-out;
+}
+
+.win-banner[hidden] {
+  display: none;
+}
+
+.win-banner h2 {
+  margin: 0 0 0.5rem;
+}
+
+.win-banner p {
+  margin: 0;
+}
+
+/* The "Did you know?" fact about your protist at the end of a level. */
+.win-banner .fun-fact {
+  margin-top: 0.75rem;
+  padding: 0.55rem 0.75rem;
+  border-radius: 12px;
+  background: rgba(37, 99, 168, 0.08);
+  font-size: 0.92rem;
+  line-height: 1.4;
+}
+
+.win-banner .fun-fact[hidden] {
+  display: none;
+}
+
+.win-banner .fun-fact strong {
+  color: #2563a8;
+}
+
+@keyframes pop-in {
+  from {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.85);
+  }
+
+  to {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+}
+
+.banner-buttons {
+  margin-top: 1rem;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+.banner-buttons .pick-btn {
+  margin-top: 0;
+  font: inherit;
+  font-weight: 700;
+}
+
+/* The protist the player steers stays on top, in full color with a soft
+   halo; her daughters are a little paler. */
+.protist-mover.player {
+  z-index: 2;
+  filter:
+    drop-shadow(0 0 2px #fff)
+    drop-shadow(0 0 3px #fff)
+    drop-shadow(0 0 7px rgba(37, 99, 168, 0.45));
+}
+
+.protist-mover.daughter {
+  opacity: 0.85;
+}
+
+/* Only the player's protist has a face. */
+.protist-mover.daughter .face {
+  display: none;
+}
+
+/* A food vacuole (game/colony.js): a bacterium she's swallowed, waiting to
+   be digested, as an amber bubble inside her. It goes once she splits. */
+.protist-mover::after {
+  content: '';
+  position: absolute;
+  left: 34%;
+  top: 30%;
+  width: 16%;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 35%, #fde68a, #d9a521);
+  border: 2px solid rgba(146, 102, 10, 0.55);
+  opacity: 0;
+  transform: scale(0.3);
+  transition: opacity 0.2s ease, transform 0.2s ease;
+  pointer-events: none;
+}
+
+.protist-mover[data-meals="1"]::after {
+  opacity: 0.9;
+  transform: scale(1);
+}
+
+/* Dried out (game/game.js): she shrivels up, pale and still. */
+.protist-mover.dried .drop-protist {
+  animation: none;
+  opacity: 0.5;
+  filter: grayscale(0.7) sepia(0.4);
+  transform: scale(0.7);
+  transition: transform 0.5s ease, opacity 0.5s ease, filter 0.5s ease;
+}
+
+/* A bacterium in the drop (game/prey.js): drawn and sized like Colette's
+   offspring in PetriPals, pointing the way it's swimming (--angle). Much
+   smaller than the protists who eat them. */
+.prey {
+  position: absolute;
+  aspect-ratio: 1;
+  opacity: 0.85;
+  transform: translate(-50%, -50%) rotate(var(--angle, 0deg));
+  pointer-events: none;
+}
+
+.prey svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .protist-mover::after,
+  .protist-mover.dried .drop-protist {
+    transition: none;
+  }
+}
+
+.cell-count {
+  margin: 1rem 0 0;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+
+.how-to-play {
+  margin: 0.75rem 0 0;
+  line-height: 1.6;
+  color: #334155;
+}
+
+/* Arrow-key directions on a computer, touch directions on a phone or tablet.
+   The media query picks from the device before any script runs (a finger is a
+   "coarse" pointer); then game/touch.js switches them to match whatever the
+   player actually uses, for devices with both. */
+.for-touch {
+  display: none;
+}
+
+@media (pointer: coarse) {
+  .for-keys {
+    display: none;
+  }
+
+  .for-touch {
+    display: inline;
+  }
+}
+
+html.input-touch .for-keys,
+html.input-keys .for-touch {
+  display: none;
+}
+
+html.input-touch .for-touch,
+html.input-keys .for-keys {
+  display: inline;
+}
+
+/* Jess's signature at the foot of every page. */
+.signature {
+  margin: 2rem 0 1.5rem;
+  font-size: 0.85rem;
+  letter-spacing: 0.04em;
+  opacity: 0.6;
+}
+
+.game-page .signature {
+  margin: 1rem 0 0;
+}
+
+/* On the home page, push it down to the bottom of the screen instead of
+   right under the start button. */
+body:not(.game-page) {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-height: 100vh;
+}
+
+body:not(.game-page) .signature {
+  margin-top: auto;
+  padding-top: 2rem;
+}
+
+/* On a phone, give the drop as much of the screen as we can: less padding
+   around the card and a thinner rim of glass. */
+@media (max-width: 600px) {
+  .game-page:has(.drop-shell) {
+    padding: 0.75rem 0.5rem;
+  }
+
+  .drop-shell {
+    padding: 1rem 0.5rem;
+  }
+
+  .drop-shell .slide {
+    padding: 8px;
+  }
+}
+
+/* "Making a wet mount…": the small card that shows while the next screen
+   loads (game/loading.js). It waits a moment before fading in, so a quick
+   page change never flashes it. The see-through cover behind it keeps a
+   second tap from starting a second trip. */
+.loading-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  background: rgba(220, 236, 250, 0.55);
+  animation: loading-in 0.2s ease-out 0.15s both;
+}
+
+.loading-overlay[hidden] {
+  display: none;
+}
+
+/* On a page that's still being filled in, the cover is solid, so the half
+   built page doesn't show through. If its script never gets to say it's
+   done (an error, say), give up after a while rather than block the page
+   forever. */
+.loading-overlay.arriving {
+  background: #dcecfa;
+  animation: loading-give-up 0s linear 8s forwards;
+}
+
+.loading-overlay.arriving .loading-card {
+  animation: loading-in 0.2s ease-out 0.15s both;
+}
+
+.loading-card {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.65rem;
+  padding: 0.7rem 1.25rem;
+  background: white;
+  border: 2px solid rgba(37, 99, 168, 0.25);
+  border-radius: 999px;
+  box-shadow: 0 12px 28px rgba(30, 58, 95, 0.18);
+  color: #1e3a5f;
+  font-family: Fredoka, system-ui, sans-serif;
+  font-weight: 600;
+  font-size: 1.05rem;
+}
+
+/* A little cell pinching into two daughter cells, over and over. */
+.loading-cells {
+  position: relative;
+  flex: none;
+  width: 30px;
+  height: 18px;
+}
+
+.loading-cells span {
+  position: absolute;
+  top: 2px;
+  left: 8px;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: #b98ae0;
+  animation: loading-split-left 0.9s ease-in-out infinite alternate;
+}
+
+.loading-cells span:last-child {
+  background: #8b5cf6;
+  animation-name: loading-split-right;
+}
+
+@keyframes loading-in {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes loading-give-up {
+  to {
+    visibility: hidden;
+  }
+}
+
+@keyframes loading-split-left {
+  to {
+    transform: translateX(-6px);
+  }
+}
+
+@keyframes loading-split-right {
+  to {
+    transform: translateX(6px);
+  }
+}
+
+/* No moving cells for anyone who'd rather not have motion: just the two
+   daughters, side by side. */
+@media (prefers-reduced-motion: reduce) {
+  .loading-cells span {
+    animation: none;
+    transform: translateX(-6px);
+  }
+
+  .loading-cells span:last-child {
+    transform: translateX(6px);
+  }
+}

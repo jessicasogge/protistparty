@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>ProtistParty | Pond Drop</title>
+    <meta name="description" content="Eat bacteria, split in two and grow your protist's colony before the drop of pond water dries." />
+    <link rel="canonical" href="https://jessicasogge.github.io/protistparty/pond-drop.html" />
+    <link rel="icon" href="./favicon.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body class="game-page">
+    <!-- "Making a wet mount…" covers the page until game/main.js has
+         filled it in (see game/loading.js). -->
+    <div class="loading-overlay arriving">
+      <div class="loading-card" role="status">
+        <span class="loading-cells" aria-hidden="true"><span></span><span></span></span>
+        <span class="loading-text">Making a wet mount…</span>
+      </div>
+    </div>
+    <main class="game-shell drop-shell">
+      <header class="drop-title">
+        <h1 class="protist-name"></h1>
+        <p class="species"><span class="species-name"></span></p>
+      </header>
+      <!-- A glass slide with a drop of pond water on it. The water dries in
+           from its edge (game/drop.js); outside it is dry glass. -->
+      <div class="slide">
+        <div class="drop">
+          <div class="water" aria-hidden="true"></div>
+          <!-- Every protist's drawing goes in here, hidden; main.js shows the one picked -->
+          <div class="protist-mover"></div>
+        </div>
+        <div class="win-banner" role="status" hidden>
+          <h2>You won!</h2>
+          <p class="win-message"></p>
+          <p class="fun-fact" hidden><strong>Did you know?</strong> <span class="fun-fact-text"></span></p>
+          <div class="banner-buttons">
+            <button class="pick-btn play-again" type="button">Play again</button>
+          </div>
+        </div>
+      </div>
+
+      <p class="cell-count" aria-live="polite">Level 1 · 1 / 4 cells</p>
+
+      <p class="how-to-play">
+        <span class="for-keys">Use the arrow keys to move.</span>
+        <span class="for-touch">Touch the drop and slide your finger to move.</span>
+        Eat the <span class="prey-name"><i>E. coli</i></span> bacteria. Every 2 you eat, you split in two, and your daughters eat and split too. Grow to <span class="target-cells">4</span> cells, and stay in the water: the drop is drying from its edge!
+      </p>
+
+      <a class="back-link" href="./index.html">Back to home</a>
+    </main>
+    <footer class="signature">jsogge 2026</footer>
+    <script type="module" src="./game/main.js"></script>
+    <script data-goatcounter="https://petripals.goatcounter.com/count"
+            async src="https://gc.zgo.at/count.js"></script>
+  </body>
+</html>

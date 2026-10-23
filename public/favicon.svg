@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <!-- ProtistParty tab icon: Prue, an amoeba, filling the whole icon. Her
+       eyes and smile are drawn bigger than in the game so they still read
+       at 16px. -->
+  <path d="M32 5 C44 4 47 14 55 15 C63 17 62 31 56 36 C51 40 55 52 43 56 C34 59 30 53 22 57 C12 61 4 51 9 42 C12 36 2 30 8 20 C13 12 22 6 32 5 Z" fill="#ece1fd" stroke="#8b5cf6" stroke-width="3.5" stroke-linejoin="round" />
+  <circle cx="23" cy="29" r="5" fill="#4c1d95" />
+  <circle cx="41" cy="29" r="5" fill="#4c1d95" />
+  <circle cx="24.8" cy="27.2" r="1.8" fill="#ffffff" />
+  <circle cx="42.8" cy="27.2" r="1.8" fill="#ffffff" />
+  <ellipse cx="15" cy="37" rx="3.6" ry="2.4" fill="#f9a8d4" />
+  <ellipse cx="49" cy="37" rx="3.6" ry="2.4" fill="#f9a8d4" />
+  <path d="M26.5 37.5 Q32 43 37.5 37.5" stroke="#4c1d95" stroke-width="3.2" fill="none" stroke-linecap="round" />
+</svg>
