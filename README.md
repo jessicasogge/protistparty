@@ -17,14 +17,14 @@ There are seven levels. Each one doubles the colony you need to grow, from 4 cel
 
 | Protist | Species | Looks |
 |---|---|---|
-| **Amy** | *Amoeba proteus* | A lilac blob that oozes as she goes, with stubby pseudopods, a round nucleus and a clear bubble of a contractile vacuole |
+| **Amy** | *Amoeba proteus* | A lilac amoeba with long, finger-like pseudopods reaching every which way, a round nucleus and a clear bubble of a contractile vacuole |
 
 More protists are on the way.
 
 ## The real science
 
 - **Protists** aren't one family on the tree of life. "Protist" is an old grab-bag name for every eukaryote (a cell with a nucleus) that isn't an animal, plant or fungus. "Protozoa" is the older name for the animal-like ones that move about and eat, like Amy.
-- **Amy's pseudopods** ("false feet") are how amoebas move: her jelly-like cytoplasm streams forward into a bulge, and the rest of her follows. Her outline never stops changing, which is why she oozes between shapes in the game. Her name is short for *amoeba*, from the Greek for "change," and her species, *proteus*, is named for Proteus, the Greek sea god who could change his shape.
+- **Amy's pseudopods** ("false feet") are how amoebas move: her jelly-like cytoplasm streams forward into a bulge, and the rest of her follows. *Amoeba proteus* puts out several long pseudopods at once, so she looks a bit like a hand with too many fingers, and her outline never stops changing, which is why she oozes between shapes in the game. Her name is short for *amoeba*, from the Greek for "change," and her species, *proteus*, is named for Proteus, the Greek sea god who could change his shape.
 - **Eating:** Amy wraps her pseudopods around food and swallows it whole, a way of eating called phagocytosis. Each meal sits in a bubble, a food vacuole, while it's digested. White blood cells eat germs the same way.
 - **Her contractile vacuole** is the clear bubble in her picture. Pond water keeps soaking into her, and the vacuole fills with the extra and squeezes it back out, over and over.
 - **Splitting in two:** Amy copies her nucleus and pinches into two daughter cells (binary fission). In the game she splits after every 2 bacteria; a real *Amoeba proteus* eats far more, and splits about once a day or two.

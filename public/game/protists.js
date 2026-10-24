@@ -10,7 +10,9 @@
 //   frames  the part of the drawing each page shows (an SVG viewBox): a
 //           little room around her on the home page, snug in the drop
 //   art     the drawing itself, in a 200 x 200 space. Wrap the face in
-//           <g class="face">.
+//           <g class="face">, and include a food vacuole,
+//           <g class="food-vacuole">, where a meal she's eaten shows
+//           (styles.css hides it until she eats).
 //
 // To add a protist: add her to this list and to SPECIES in config.js.
 
@@ -29,24 +31,67 @@ const face = (x, y, dark) => `
         <path d="M${x - 6} ${y + 12} Q${x} ${y + 18} ${x + 6} ${y + 12}" stroke="${dark}" stroke-width="3" fill="none" stroke-linecap="round" />
       </g>`;
 
-// Amy's outline in two shapes she oozes between: her pseudopods push out
-// on one side as they pull in on another. Both have the same number of
-// curves, so the browser can morph one into the other.
-const AMY_SHAPES = [
-  'M100 40 C130 36 142 62 162 64 C188 68 186 104 166 116 C150 126 160 158 132 164 C108 170 96 150 74 160 C46 170 28 140 42 118 C52 100 20 88 38 64 C54 44 76 42 100 40 Z',
-  'M104 44 C132 34 152 54 172 56 C194 62 184 98 168 112 C152 124 154 152 128 160 C104 168 92 156 66 166 C36 174 26 134 40 114 C50 98 28 80 46 62 C60 48 80 48 104 44 Z',
+// Amy's outline: a small round body with long, finger-like pseudopods
+// reaching every which way, like a textbook drawing of Amoeba proteus.
+// Each pseudopod is [direction in degrees (0 is right, 90 is down), how
+// far it reaches past her body, how wide it is (radians)]. She oozes
+// between two sets: some pseudopods stretch out as others pull in.
+const AMY_PSEUDOPODS = [
+  [[-30, 38, 0.3], [22, 22, 0.28], [66, 44, 0.27], [130, 30, 0.29], [200, 46, 0.27], [262, 18, 0.34]],
+  [[-36, 44, 0.29], [18, 16, 0.3], [72, 38, 0.29], [124, 38, 0.27], [196, 40, 0.29], [258, 26, 0.32]],
 ];
+const AMY_CENTER = [100, 104];
+const AMY_BODY = 46; // her body's radius
+
+// How far her outline is from her center in direction `angle` (radians).
+// Each pseudopod falls away a little more steeply than a bell curve on
+// either side (a power of 2.5, not 2), so it comes out as a finger with a
+// soft, rounded tip, not a spike, and flows smoothly into her body.
+function reach(angle, pseudopods) {
+  let r = AMY_BODY;
+  for (const [direction, length, width] of pseudopods) {
+    const off = ((angle - (direction * Math.PI) / 180 + Math.PI * 3) % (Math.PI * 2)) - Math.PI;
+    r += length * Math.exp(-(Math.abs(off / width) ** 2.5));
+  }
+  return r;
+}
+
+// Her outline as a smooth, closed SVG path through 60 points around her,
+// `scale` times her full size. Every outline has the same number of
+// curves, so the browser can morph one into the other.
+export function amoebaPath(pseudopods, scale = 1) {
+  const [cx, cy] = AMY_CENTER;
+  const points = Array.from({ length: 60 }, (_, i) => {
+    const angle = (Math.PI * 2 * i) / 60 - Math.PI / 2;
+    const r = reach(angle, pseudopods) * scale;
+    return [cx + r * Math.cos(angle), cy + r * Math.sin(angle)];
+  });
+  const n = (v) => Number(v.toFixed(1));
+  // Each stretch between two points is a curve whose handles point along
+  // the neighbors on either side (a Catmull-Rom spline).
+  const curves = points.map((p1, i) => {
+    const p0 = points[(i + 59) % 60];
+    const p2 = points[(i + 1) % 60];
+    const p3 = points[(i + 2) % 60];
+    const c1 = [p1[0] + (p2[0] - p0[0]) / 6, p1[1] + (p2[1] - p0[1]) / 6];
+    const c2 = [p2[0] - (p3[0] - p1[0]) / 6, p2[1] - (p3[1] - p1[1]) / 6];
+    return `C${n(c1[0])} ${n(c1[1])} ${n(c2[0])} ${n(c2[1])} ${n(p2[0])} ${n(p2[1])}`;
+  });
+  return `M${n(points[0][0])} ${n(points[0][1])} ${curves.join(' ')} Z`;
+}
+
+const AMY_SHAPES = AMY_PSEUDOPODS.map((pods) => amoebaPath(pods));
 const OOZE = 'dur="3.2s" repeatCount="indefinite" calcMode="spline" keyTimes="0;0.5;1" keySplines="0.4 0 0.6 1;0.4 0 0.6 1"';
 
 export const PROTISTS = [
-  // Amy: Amoeba proteus, a lilac blob with pseudopods, a nucleus, a
-  // contractile vacuole and a sprinkle of granules
+  // Amy: Amoeba proteus, a lilac amoeba with long pseudopods, a nucleus,
+  // a contractile vacuole and a sprinkle of granules
   {
     id: 'amy',
     name: 'Amy',
-    looks: 'a lilac amoeba: a soft, ever-changing blob with stubby pseudopods, a round nucleus and a clear bubble of a contractile vacuole',
+    looks: 'a lilac amoeba with long, finger-like pseudopods reaching every which way, a round nucleus and a clear bubble of a contractile vacuole',
     motion: 'squish',
-    frames: { home: '0 0 200 200', drop: '12 14 186 186' },
+    frames: { home: '0 0 200 200', drop: '9 25 170 170' },
     art: `
       <!-- her outline, oozing between two shapes -->
       <path d="${AMY_SHAPES[0]}" fill="#ece1fd" stroke="#8b5cf6" stroke-width="4" stroke-linejoin="round">
@@ -54,19 +99,25 @@ export const PROTISTS = [
       </path>
       <!-- granules in her cytoplasm -->
       <g fill="#c4b0f4">
-        <circle cx="58" cy="76" r="2.6" />
-        <circle cx="150" cy="78" r="2.2" />
-        <circle cx="152" cy="104" r="2.6" />
-        <circle cx="88" cy="146" r="2.4" />
-        <circle cx="62" cy="108" r="2" />
-        <circle cx="112" cy="58" r="2.2" />
+        <circle cx="48" cy="78" r="2.6" />
+        <circle cx="87" cy="57" r="2.2" />
+        <circle cx="133" cy="101" r="2.6" />
+        <circle cx="55" cy="98" r="2.2" />
+        <circle cx="126" cy="150" r="2" />
+        <circle cx="120" cy="162" r="2" />
       </g>
       <!-- her nucleus -->
-      <ellipse cx="128" cy="134" rx="15" ry="11" fill="#d7c4fa" stroke="#8b5cf6" stroke-width="3" />
+      <ellipse cx="112" cy="138" rx="15" ry="11" fill="#d7c4fa" stroke="#8b5cf6" stroke-width="3" />
       <!-- her contractile vacuole, a clear bubble that pumps out extra water -->
-      <circle cx="66" cy="134" r="9" fill="#f8f3ff" stroke="#c4b0f4" stroke-width="2.5" />
-      <ellipse cx="84" cy="58" rx="9" ry="4.5" fill="#f8f3ff" transform="rotate(-20 84 58)" />
-      ${face(102, 98, '#4c1d95')}
+      <circle cx="74" cy="132" r="9" fill="#f8f3ff" stroke="#c4b0f4" stroke-width="2.5" />
+      <ellipse cx="84" cy="70" rx="9" ry="4.5" fill="#f8f3ff" transform="rotate(-20 84 70)" />
+      <!-- a food vacuole, in the pseudopod to the upper right of her face,
+           well inside her outline in both shapes she oozes between -->
+      <g class="food-vacuole">
+        <circle cx="146" cy="74" r="9" fill="#f2c14e" stroke="#a87a12" stroke-width="2" />
+        <circle cx="143" cy="71" r="3" fill="#fde68a" />
+      </g>
+      ${face(100, 98, '#4c1d95')}
     `,
   },
 ];
