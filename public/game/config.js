@@ -27,7 +27,7 @@ export const SPECIES = {
     ],
     scientific: '*Amoeba proteus*',
     color: '#6d28d9',
-    size: 0.15,
+    size: 0.13,
     colors: { fill: '#ece1fd', stroke: '#8b5cf6', highlight: '#f8f3ff', dark: '#4c1d95' },
   },
 };
@@ -60,7 +60,7 @@ export const GAME = {
   // `size`, in drop radii), since her drawing doesn't fill its whole box:
   // about as far as her body and the bases of her pseudopods reach.
   // Her daughters are drawn DAUGHTER_SCALE times her size.
-  REACH_SHARE: 0.65,
+  REACH_SHARE: 0.75,
   DAUGHTER_SCALE: 0.7,
 
   // A cell divides once it has eaten MEALS_PER_DIVISION bacteria (each

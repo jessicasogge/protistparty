@@ -24,6 +24,7 @@ describe('the protists', () => {
       expect(width).toBe(height); // square, so she's never squashed
     }
     expect(protist.art).toContain('<g class="face">');
+    expect(protist.art).toContain('<g class="food-vacuole">');
     expect(protistById(id)).toBe(protist);
   });
 

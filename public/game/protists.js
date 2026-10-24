@@ -10,7 +10,9 @@
 //   frames  the part of the drawing each page shows (an SVG viewBox): a
 //           little room around her on the home page, snug in the drop
 //   art     the drawing itself, in a 200 x 200 space. Wrap the face in
-//           <g class="face">.
+//           <g class="face">, and include a food vacuole,
+//           <g class="food-vacuole">, where a meal she's eaten shows
+//           (styles.css hides it until she eats).
 //
 // To add a protist: add her to this list and to SPECIES in config.js.
 
@@ -109,6 +111,12 @@ export const PROTISTS = [
       <!-- her contractile vacuole, a clear bubble that pumps out extra water -->
       <circle cx="74" cy="132" r="9" fill="#f8f3ff" stroke="#c4b0f4" stroke-width="2.5" />
       <ellipse cx="84" cy="70" rx="9" ry="4.5" fill="#f8f3ff" transform="rotate(-20 84 70)" />
+      <!-- a food vacuole, in the pseudopod to the upper right of her face,
+           well inside her outline in both shapes she oozes between -->
+      <g class="food-vacuole">
+        <circle cx="146" cy="74" r="9" fill="#f2c14e" stroke="#a87a12" stroke-width="2" />
+        <circle cx="143" cy="71" r="3" fill="#fde68a" />
+      </g>
       ${face(100, 98, '#4c1d95')}
     `,
   },

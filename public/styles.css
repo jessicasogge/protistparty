@@ -424,30 +424,20 @@ body {
 }
 
 /* A food vacuole (game/colony.js): a bacterium she's swallowed, waiting to
-   be digested, as an amber bubble inside her. It goes once she splits. It
-   sits in the pseudopod reaching out to the upper right of her face, at
-   least half its own width inside her outline in both of the shapes she
-   oozes between. */
-.protist-mover::after {
-  content: '';
-  box-sizing: border-box;
-  position: absolute;
-  left: 75%;
-  top: 23%;
-  width: 11%;
-  aspect-ratio: 1;
-  border-radius: 50%;
-  background: radial-gradient(circle at 35% 35%, #fde68a, #d9a521);
-  border: 2px solid rgba(146, 102, 10, 0.55);
+   be digested, drawn as an amber bubble inside her (protists.js). It's
+   part of her drawing, so it squishes and oozes along with her. Hidden
+   until she's eaten, and gone again once she splits. */
+.protist-mover .food-vacuole {
   opacity: 0;
   transform: scale(0.3);
+  transform-box: fill-box;
+  transform-origin: center;
   transition: opacity 0.2s ease, transform 0.2s ease;
-  pointer-events: none;
 }
 
-.protist-mover[data-meals="1"]::after {
-  opacity: 0.9;
-  transform: scale(1);
+.protist-mover[data-meals="1"] .food-vacuole {
+  opacity: 0.95;
+  transform: none;
 }
 
 /* Dried out (game/game.js): she shrivels up, pale and still. */
@@ -477,7 +467,7 @@ body {
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .protist-mover::after,
+  .protist-mover .food-vacuole,
   .protist-mover.dried .drop-protist {
     transition: none;
   }
