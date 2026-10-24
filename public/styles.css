@@ -425,13 +425,15 @@ body {
 
 /* A food vacuole (game/colony.js): a bacterium she's swallowed, waiting to
    be digested, as an amber bubble inside her. It goes once she splits. It
-   sits at the base of the pseudopod reaching out to the upper right of
-   her face. */
+   sits in the pseudopod reaching out to the upper right of her face, at
+   least half its own width inside her outline in both of the shapes she
+   oozes between. */
 .protist-mover::after {
   content: '';
+  box-sizing: border-box;
   position: absolute;
-  left: 72%;
-  top: 27%;
+  left: 75%;
+  top: 23%;
   width: 11%;
   aspect-ratio: 1;
   border-radius: 50%;

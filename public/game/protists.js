@@ -35,20 +35,21 @@ const face = (x, y, dark) => `
 // far it reaches past her body, how wide it is (radians)]. She oozes
 // between two sets: some pseudopods stretch out as others pull in.
 const AMY_PSEUDOPODS = [
-  [[-30, 38, 0.26], [22, 22, 0.24], [66, 44, 0.24], [130, 30, 0.26], [200, 46, 0.24], [262, 18, 0.3]],
-  [[-36, 44, 0.24], [18, 16, 0.26], [72, 38, 0.26], [124, 38, 0.24], [196, 40, 0.26], [258, 26, 0.28]],
+  [[-30, 38, 0.3], [22, 22, 0.28], [66, 44, 0.27], [130, 30, 0.29], [200, 46, 0.27], [262, 18, 0.34]],
+  [[-36, 44, 0.29], [18, 16, 0.3], [72, 38, 0.29], [124, 38, 0.27], [196, 40, 0.29], [258, 26, 0.32]],
 ];
 const AMY_CENTER = [100, 104];
 const AMY_BODY = 46; // her body's radius
 
 // How far her outline is from her center in direction `angle` (radians).
-// Each pseudopod falls away steeply on either side (a fourth power, not a
-// square), so it comes out as a finger with a rounded tip, not a spike.
+// Each pseudopod falls away a little more steeply than a bell curve on
+// either side (a power of 2.5, not 2), so it comes out as a finger with a
+// soft, rounded tip, not a spike, and flows smoothly into her body.
 function reach(angle, pseudopods) {
   let r = AMY_BODY;
   for (const [direction, length, width] of pseudopods) {
     const off = ((angle - (direction * Math.PI) / 180 + Math.PI * 3) % (Math.PI * 2)) - Math.PI;
-    r += length * Math.exp(-((off / width) ** 4));
+    r += length * Math.exp(-(Math.abs(off / width) ** 2.5));
   }
   return r;
 }
@@ -88,7 +89,7 @@ export const PROTISTS = [
     name: 'Amy',
     looks: 'a lilac amoeba with long, finger-like pseudopods reaching every which way, a round nucleus and a clear bubble of a contractile vacuole',
     motion: 'squish',
-    frames: { home: '0 0 200 200', drop: '8.5 24.5 172 172' },
+    frames: { home: '0 0 200 200', drop: '9 25 170 170' },
     art: `
       <!-- her outline, oozing between two shapes -->
       <path d="${AMY_SHAPES[0]}" fill="#ece1fd" stroke="#8b5cf6" stroke-width="4" stroke-linejoin="round">
@@ -96,7 +97,7 @@ export const PROTISTS = [
       </path>
       <!-- granules in her cytoplasm -->
       <g fill="#c4b0f4">
-        <circle cx="44" cy="76" r="2.6" />
+        <circle cx="48" cy="78" r="2.6" />
         <circle cx="87" cy="57" r="2.2" />
         <circle cx="133" cy="101" r="2.6" />
         <circle cx="55" cy="98" r="2.2" />
